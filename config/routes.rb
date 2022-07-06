@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'tasks#index'
   resources :ints
   resources :labels
   resources :tasks
