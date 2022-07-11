@@ -7,6 +7,7 @@
     <tr>
       <th>タイトル</th>
       <th>コンテント</th>
+      <th scope = "col" ><%= link_to '終了期限', tasks_path(sort_deadline: "true") %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <tr class = "task_row">
         <td><%= task.title %></td>
         <td><%= task.content %></td>
+        <td><%= task.deadline %></td>
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
