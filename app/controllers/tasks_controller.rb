@@ -5,6 +5,7 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all.order(created_at: :DESC)
     @tasks = Task.all.order(deadline: :DESC) if params[:sort_deadline]
+    @tasks = @tasks.where('title LIKE ?', "%#{params[:search]}%") if params[:search].present?
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -60,12 +61,12 @@ class TasksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def task_params
-      params.require(:task).permit(:title, :deadline, :priority, :content, :status)
-    end
+  # Only allow a list of trusted parameters through.
+  def task_params
+    params.require(:task).permit(:title, :deadline, :priority, :content, :status)
+  end
 end
