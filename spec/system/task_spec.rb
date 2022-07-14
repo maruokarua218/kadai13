@@ -38,7 +38,9 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '終了期限が遅いタスクが一番上に表示される' do
        FactoryBot.create(:task, title: 'first', deadline: Date.today)
        FactoryBot.create(:task, title: 'second', deadline: Date.today + 1.days)
-       visit tasks_path(sort_period: "true")
+       visit tasks_path
+       click_on '終了期限'
+       sleep(0.5)
        task_list = all('td').first
        expect(task_list).to have_content 'second'
       end
@@ -53,5 +55,34 @@ RSpec.describe 'タスク管理機能', type: :system do
          expect(page).to have_content 'aa'
        end
      end
+  end
+  context 'タイトルであいまい検索をした場合' do
+    it "検索キーワードを含むタスクで絞り込まれる" do
+      @task = FactoryBot.create(:task, title: 'aa', content: 'aa')
+      visit tasks_path
+      fill_in 'search', with: 'aa'
+      click_on "検索"
+      expect(page).to have_content 'aa'
+    end
+  end
+  context 'ステータス検索をした場合' do
+    it "ステータスに完全一致するタスクが絞り込まれる" do
+      @task = FactoryBot.create(:task, status: '完了')
+      visit tasks_path
+      select '完了', from: 'status'
+      click_on "検索"
+      expect(page).to have_content '完了'
+    end
+  end
+  context 'タイトルのあいまい検索とステータス検索をした場合' do
+    it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+      @task = FactoryBot.create(:task, title: 'aa', content: 'aa', status: '完了')
+      visit tasks_path
+      fill_in 'search', with: 'aa'
+      select '完了', from: 'status'
+      click_on "検索"
+      expect(page).to have_content 'aa'
+      expect(page).to have_content '完了'
+    end
   end
 end
