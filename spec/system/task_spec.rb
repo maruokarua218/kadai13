@@ -25,6 +25,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'task'
       end
     end
+  end
 
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
@@ -45,7 +46,17 @@ RSpec.describe 'タスク管理機能', type: :system do
        expect(task_list).to have_content 'second'
       end
     end
-  end
+    context '優先順位でソートするボタンを押した場合' do
+      it '優先順位が高いタスクが一番上に表示される' do
+       FactoryBot.create(:task, title: 'first', priority: '低' )
+       FactoryBot.create(:task, title: 'second', priority: '高' )
+       visit tasks_path
+       click_on '優先度'
+       sleep(0.5)
+       task_list = all('td').first
+       expect(task_list).to have_content 'second'
+      end
+    end
 
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
