@@ -4,6 +4,7 @@
 
   <%= form_with url: tasks_path, method: :get, local: true do |form| %>
   <a>タスク名<%= form.text_field :search %></a>
+  <a>ステータス</a><%= form.select :status, options_for_select(Task.statuses.keys.to_a), {prompt: "選択してください"}, class: "prefecture-select" %>
   <%= form.submit '検索', name: nil %>
 <% end %>
 
