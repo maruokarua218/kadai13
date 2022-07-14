@@ -5,6 +5,7 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all
     @tasks = @tasks.order(deadline: :desc) if params[:sort_deadline]
+    @tasks = @tasks.order(priority: :desc) if params[:sort_priority]
     if params[:search].present? && params[:status].present?
        @tasks = @tasks.search_title(params[:search]).search_status(params[:status])
     elsif params[:search].present?

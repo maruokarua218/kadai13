@@ -28,6 +28,10 @@
       <%= form.label :status %>
       <%= form.select :status, options_for_select(Task.statuses.keys.to_a), {prompt: "選択してください"}, class: "prefecture-select" %>
     </div>
+    <div class="task_title">
+      <%= form.label :priority %>
+      <%= form.select :priority, options_for_select(Task.priorities.keys.to_a), {prompt: "選択してください"}, class: "prefecture-select" %>
+    </div>
 
     <%= form.submit %>
   </div>
