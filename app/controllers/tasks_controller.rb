@@ -14,6 +14,7 @@ class TasksController < ApplicationController
           @tasks = @tasks.search_status(params[:status])
     else
     end
+    @tasks = @tasks.page(params[:page]).per(5)
   end
 
   # GET /tasks/1 or /tasks/1.json

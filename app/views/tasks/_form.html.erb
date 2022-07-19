@@ -12,13 +12,13 @@
   <% end %>
 
   <div class="actions">
-    <div class="task_title">
+    <div class="form-group">
       <%= form.label :title %>
-      <%= form.text_field :title %>
+      <%= form.text_field :title, class: "form-control-sm" %>
     </div>
     <div class="task_title">
       <%= form.label :content %>
-      <%= form.text_field :content %>
+      <%= form.text_field :content, class: "form-control-sm" %>
     </div>
     <div class="task_title">
       <%= form.label :deadline %>
@@ -32,8 +32,7 @@
       <%= form.label :priority %>
       <%= form.select :priority, options_for_select(Task.priorities.keys.to_a), {prompt: "選択してください"}, class: "prefecture-select" %>
     </div>
-
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-danger" %>
   </div>
 
 <% end %>
