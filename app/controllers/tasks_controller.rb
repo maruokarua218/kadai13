@@ -3,7 +3,18 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all.order(created_at: :DESC)
+    @tasks = Task.all
+    @tasks = @tasks.order(deadline: :desc) if params[:sort_deadline]
+    @tasks = @tasks.order(priority: :desc) if params[:sort_priority]
+    if params[:search].present? && params[:status].present?
+       @tasks = @tasks.search_title(params[:search]).search_status(params[:status])
+    elsif params[:search].present?
+          @tasks = @tasks.search_title(params[:search])
+    elsif params[:status].present?
+          @tasks = @tasks.search_status(params[:status])
+    else
+    end
+    @tasks = @tasks.page(params[:page]).per(5)
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -59,12 +70,12 @@ class TasksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def task_params
-      params.require(:task).permit(:title, :deadline, :priority, :content)
-    end
+  # Only allow a list of trusted parameters through.
+  def task_params
+    params.require(:task).permit(:title, :deadline, :priority, :content, :status)
+  end
 end
