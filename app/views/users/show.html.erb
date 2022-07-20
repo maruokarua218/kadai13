@@ -1,4 +1,5 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @user.name %>のページ</h1>
 
+<p>メールアドレス: <%= @user.email %></p>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
