@@ -7,6 +7,7 @@
 | email | string |
 | password_digest | string |
 | image | text |
+|admin|boolean|
 
 ## Taskモデル
 | カラム名 | データ型 |
