@@ -24,10 +24,9 @@
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
 
-  <% if current_user.admin? && !(current_user == user) %>
-     | <%= link_to "delete", user, method: :delete,
-                                   data: { confirm: "You sure?" } %>
-  <% end %>  
-
   <%= f.submit "Create my account" %>
 <% end %>
+
+
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', users_path %>
