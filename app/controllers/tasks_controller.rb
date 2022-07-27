@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     @tasks = @tasks.order(deadline: :desc) if params[:sort_deadline]
     @tasks = @tasks.order(priority: :desc) if params[:sort_priority]
     if params[:search].present? && params[:status].present?
@@ -32,7 +32,7 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     respond_to do |format|
       if @task.save
