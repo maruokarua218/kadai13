@@ -10,14 +10,10 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6 }
 
   def admin_cannot_update
-   if User.where(admin: true).count == 1 && self.admin_change == [true, false]
-      throw :abort
-    end
+    throw :abort if User.where(admin: true).count == 1 && self.admin_change == [true, false]
   end
 
   def admin_cannot_delete
-   if User.where(admin: true).count == 1 && self.admin == true
-      throw :abort
-    end
+    throw :abort if User.where(admin: true).count == 1 && self.admin == true
   end
 end

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get 'search', to: 'tasks#search'
     end
   end
-  root 'tasks#index'
+  root 'users#new'
   resources :labels
   namespace :admin do
     resources :users

@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   skip_before_action :login_required, only: %i[new create]
   before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :check_admin, only: %i[new create]
+  before_action :check_admin
 
   def index
     @users = User.all
@@ -19,14 +19,13 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    @user = login(params[:email], params[:password])
-    if @user
-      redirect_to admin_root_path, success: 'ログインしました'
-    else
-      flash.now[:danger] = 'ログインに失敗しました'
-      render :new
+      @user = User.new(user_params)
+      if @user.save
+        redirect_to admin_users_path, notice: "ユーザーを作成しました"
+      else
+        render :new
+      end
     end
-  end
 
   def update
       if @user.update(user_params)
@@ -47,7 +46,9 @@ class Admin::UsersController < ApplicationController
   private
 
   def check_admin
-    redirect_to root_path, warning: '権限がありません' unless current_user.admin?
+    unless current_user.admin?
+      redirect_to tasks_path, warning: '権限がありません'
+    end
   end
 
   def set_user
