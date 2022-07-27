@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    forbid_login_user
     @user = User.new
   end
 
@@ -60,6 +61,12 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def forbid_login_user
+        if current_user != nil
+            redirect_to tasks_path
+        end
+    end
 
     def set_user
       @user = User.find(params[:id])
