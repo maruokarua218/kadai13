@@ -7,3 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.create(name: 'qq', email: 'qq@gmail.com', password: 'qqdayo', admin: false )
 User.create(name: 'aa', email: 'aa@gmail.com', password: 'aadayo', admin: true )
+Label.create(name: 'テスト1')
+Label.create(name: 'テスト2')
