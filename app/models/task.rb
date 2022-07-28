@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings
   belongs_to :user
   validates :title, presence: true
   enum status:{ 未着手:1,着手中:2,完了:3 }
