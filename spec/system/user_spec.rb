@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 RSpec.describe 'ユーザー登録・セッション機能・管理画面のテスト', type: :system do
   describe 'ユーザー登録のテスト' do
     context 'ユーザーが登録がなく、ログインしていない場合' do
